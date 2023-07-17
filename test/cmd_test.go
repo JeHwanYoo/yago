@@ -10,16 +10,18 @@ import (
 	"yago/test/mock"
 )
 
+type CmdTestCase struct {
+	name          string
+	args          []string
+	writer        *mock.Writer
+	parser        *mock.Parser
+	generator     *mock.Generator
+	expectedError string
+	expectedOut   string
+}
+
 func TestRootCommand(t *testing.T) {
-	testCases := []struct {
-		name          string
-		args          []string
-		writer        *mock.Writer
-		parser        *mock.Parser
-		generator     *mock.Generator
-		expectedError string
-		expectedOut   string
-	}{
+	testCases := []CmdTestCase{
 		{
 			name:          "no yaml file provided",
 			args:          []string{"-o", "output.go"},
