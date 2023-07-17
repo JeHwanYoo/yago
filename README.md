@@ -9,6 +9,10 @@ Syntax Tree (AST), then generates corresponding Go code. This tool serves as the
 
 This project is being developed in compliance with TDD as a principle.
 
+## Architecture
+
+<a href="https://ibb.co/sPb9MHq"><img src="https://i.ibb.co/JdmjMQH/yago-drawio.png" alt="yago-drawio" border="0"></a>
+
 ## Synopsis
 
 ```
