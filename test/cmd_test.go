@@ -2,7 +2,6 @@ package cmd_test
 
 import (
 	"context"
-	"errors"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"yago/src/yago/cmd"
@@ -46,7 +45,7 @@ func TestRootCommand(t *testing.T) {
 		{
 			name:          "write file error",
 			args:          []string{"program/hello-world.yaml", "-o", "output.go"},
-			writer:        &mock.Writer{Err: errors.New("write file error")},
+			writer:        &mock.Writer{},
 			parser:        &mock.Parser{},
 			generator:     &mock.Generator{},
 			expectedError: "failed to write to output file",
