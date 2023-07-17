@@ -45,6 +45,18 @@ func TestRootCommand(t *testing.T) {
 			expectedError: "failed to read YAML file: program/invalid.yaml",
 		},
 		{
+			name:   "parse yaml file error",
+			args:   []string{"program/hello-world.yaml", "-o", "output.go"},
+			writer: &mock.Writer{},
+			parser: &mock.Parser{
+				ParseFunc: func(data []byte) (interface{}, error) {
+					return nil, errors.New("parse error")
+				},
+			},
+			generator:     &mock.Generator{},
+			expectedError: "failed to parse YAML: parse error",
+		},
+		{
 			name: "write file error",
 			args: []string{"program/hello-world.yaml", "-o", "output.go"},
 			writer: &mock.Writer{
