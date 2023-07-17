@@ -12,7 +12,7 @@ var output string
 
 func Init() {
 	Root = &cobra.Command{
-		Use:   "yago",
+		Use:   "yago <yaml-file> [flags]",
 		Short: "Yago is a YAML based programming language",
 		Long:  `Yago is a declarative language that uses YAML syntax. It takes YAML files as input, converting them into an Abstract Syntax Tree (AST), then generates corresponding Go code. This tool serves as the compiler for Yago.`,
 		RunE: func(cmd *cobra.Command, args []string) error {

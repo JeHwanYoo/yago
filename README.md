@@ -8,3 +8,14 @@ Yago is a declarative language that uses YAML syntax. It takes YAML files as inp
 Syntax Tree (AST), then generates corresponding Go code. This tool serves as the compiler for Yago.
 
 This project is being developed in compliance with TDD as a principle.
+
+## Synopsis
+
+```
+Usage:
+  yago <yaml-file> [flags]
+
+Flags:
+  -h, --help            help for yago
+  -o, --output string   output file (must be specified with -o option)
+```
