@@ -2,7 +2,9 @@ package cmd_test
 
 import (
 	"context"
+	"errors"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 	"yago/src/yago/cmd"
 	"yago/test/mock"
@@ -40,15 +42,19 @@ func TestRootCommand(t *testing.T) {
 			writer:        &mock.Writer{},
 			parser:        &mock.Parser{},
 			generator:     &mock.Generator{},
-			expectedError: "failed to parse YAML",
+			expectedError: "failed to read YAML file: program/invalid.yaml",
 		},
 		{
-			name:          "write file error",
-			args:          []string{"program/hello-world.yaml", "-o", "output.go"},
-			writer:        &mock.Writer{},
+			name: "write file error",
+			args: []string{"program/hello-world.yaml", "-o", "output.go"},
+			writer: &mock.Writer{
+				WriteFileFunc: func(name string, data []byte, perm os.FileMode) error {
+					return errors.New("write error")
+				},
+			},
 			parser:        &mock.Parser{},
 			generator:     &mock.Generator{},
-			expectedError: "failed to write to output file",
+			expectedError: "failed to write to output file: write error",
 		},
 		{
 			name:      "success",
@@ -85,7 +91,7 @@ func main() {
 
 			if tc.expectedError != "" {
 				assert.Error(t, err)
-				assert.Contains(t, err.Error(), tc.expectedError)
+				assert.Equal(t, err.Error(), tc.expectedError)
 			} else {
 				assert.NoError(t, err)
 
