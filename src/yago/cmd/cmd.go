@@ -52,3 +52,7 @@ var Root = &cobra.Command{
 func Init() {
 	Root.PersistentFlags().StringVarP(&output, "output", "o", "", "output file (must be specified with -o option)")
 }
+
+func Reset() {
+	output = ""
+}
