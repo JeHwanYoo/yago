@@ -51,7 +51,7 @@ func TestRootCommand(t *testing.T) {
 			args:   []string{"program/hello-world.yaml", "-o", "output.go"},
 			writer: &mock.Writer{},
 			parser: &mock.Parser{
-				ParseFunc: func(data []byte) (interface{}, error) {
+				ParseFunc: func(data *[]byte) (*interface{}, error) {
 					return nil, errors.New("parse error")
 				},
 			},
@@ -62,7 +62,7 @@ func TestRootCommand(t *testing.T) {
 			name: "write file error",
 			args: []string{"program/hello-world.yaml", "-o", "output.go"},
 			writer: &mock.Writer{
-				WriteFileFunc: func(name string, data []byte, perm os.FileMode) error {
+				WriteFileFunc: func(name string, data *[]byte, perm os.FileMode) error {
 					return errors.New("write error")
 				},
 			},
@@ -109,7 +109,7 @@ func main() {
 			} else {
 				assert.NoError(t, err)
 
-				got := string(tc.writer.GetWrittenData())
+				got := string(*tc.writer.GetWrittenData())
 				assert.Equal(t, tc.expectedOut, got)
 			}
 		})

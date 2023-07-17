@@ -28,7 +28,7 @@ func program(cmd *cobra.Command, args []string) error {
 	}
 
 	parser := cmd.Context().Value("parser").(injectable.Parser)
-	ast, err2 := parser.Parse(yamlFile)
+	ast, err2 := parser.Parse(&yamlFile)
 	if err2 != nil {
 		return fmt.Errorf("failed to parse YAML: %v", err2)
 	}
@@ -39,7 +39,8 @@ func program(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to generate Go code: %v", err3)
 	}
 
-	err4 := writer.WriteFile(output, []byte(goCode), 0644)
+	buffer := []byte(goCode)
+	err4 := writer.WriteFile(output, &buffer, 0644)
 	if err4 != nil {
 		return fmt.Errorf("failed to write to output file: %v", err4)
 	}
